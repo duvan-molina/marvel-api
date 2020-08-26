@@ -1,13 +1,9 @@
 import React from 'react'
 import logo from '../../images/logo.svg'
 import styled from 'styled-components'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faStar as fasFaStar } from '@fortawesome/free-solid-svg-icons'
-import { faStar as farFaStar } from '@fortawesome/free-regular-svg-icons'
 import TextField from '../Field'
+import Button from '../Button'
 
-library.add(fasFaStar, farFaStar)
 
 const Navbar = () => {
   const [state, setState] = React.useState(false)
@@ -29,9 +25,7 @@ const Navbar = () => {
             <Divider />
             <NavbarActions>
               <TextField placeholder='Buscar' onChange={() => console.log('hello world')} />
-              <ButtonFavorite>
-                <FontAwesomeIcon icon={!state ? farFaStar : fasFaStar} onClick={handleClick} />
-              </ButtonFavorite>
+              <Button name='header' state={state} handleClick={handleClick} />
             </NavbarActions>
             <Divider />
           </NavbarContainerItems>
@@ -65,7 +59,7 @@ const NavbarLogo = styled.div`
   }
 `
 const NavbarContainerItems = styled.div`
-  padding: 0 20px;
+  padding: 0 47px;
   display: flex; 
   align-items: center; 
   width: 100%;
@@ -83,10 +77,5 @@ const NavbarActions = styled.div`
   width: 100%;
   padding: 0 20px;
 `
-const ButtonFavorite = styled.div`
-  svg {
-    color: ${props => props.theme.palette.gray};
-    cursor: pointer;
-  }
-`
+
 export default Navbar
