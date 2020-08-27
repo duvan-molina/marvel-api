@@ -2,12 +2,12 @@ import React from 'react'
 import styled from 'styled-components'
 import Button from '../Button'
 
-const Card = ({ name, image }) => {
+const Card = ({ name, image, ...props }) => {
   const [state, setState] = React.useState(false)
   const handleClick = () => setState(!state)
 
   return (
-    <CardStyled image={image}>
+    <CardStyled image={image} {...props}>
       <Button name="card" state={state} handleClick={handleClick} />
       <NameHero>{name}</NameHero>
     </CardStyled>
@@ -24,6 +24,7 @@ const CardStyled = styled.div`
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+  cursor: pointer;
 svg {
   position: absolute;
   top: 10px;

@@ -37,7 +37,7 @@ const Navbar = () => {
 
 const NavbarStyled = styled.div`
   background-color: ${props => props.theme.palette.whiteClassic};
-  height: 50px;
+  height: 66px;
 `
 const NavbarContainer = styled.div`
   padding: 7px 13px;

@@ -7,5 +7,6 @@ export const theme = {
     dark: '#000000',
     darkGray: '#00000080',
     gray: '#A8A8A8',
+    colorFont: '#3E3E3E'
   }
 }

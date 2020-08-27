@@ -7,11 +7,12 @@ import Layout from '../components/Layout'
 import Home from '../pages/Home'
 
 const App = () => {
+
   return (
     <ThemeProvider theme={theme}>
       <DataPropvider>
         <BrowserRouter>
-          <GlobalStyle />
+          <GlobalStyle scroll={false} />
           <Layout>
             <Switch>
               <Route exact path='/' component={Home} />
@@ -32,6 +33,7 @@ const GlobalStyle = createGlobalStyle`
   }
   body {
     background-color: rgba(168, 168, 168, .10);
+    overflow-y: ${ ({ scroll }) => scroll && 'hidden'}
   }
 `
 
