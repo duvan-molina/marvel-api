@@ -2,20 +2,23 @@ import React from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import { createGlobalStyle, ThemeProvider } from 'styled-components'
 import { theme } from '../config/theme'
+import { DataPropvider } from '../context/getData'
 import Layout from '../components/Layout'
 import Home from '../pages/Home'
 
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <GlobalStyle />
-        <Layout>
-          <Switch>
-            <Route exact path='/' component={Home} />
-          </Switch>
-        </Layout>
-      </BrowserRouter>
+      <DataPropvider>
+        <BrowserRouter>
+          <GlobalStyle />
+          <Layout>
+            <Switch>
+              <Route exact path='/' component={Home} />
+            </Switch>
+          </Layout>
+        </BrowserRouter>
+      </DataPropvider>
     </ThemeProvider>
   )
 }
