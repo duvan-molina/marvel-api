@@ -24,12 +24,11 @@ const CardStyled = styled.div`
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  cursor: pointer;
-svg {
+  svg {
   position: absolute;
   top: 10px;
   right: 23px;
-}
+  }
 `
 const NameHero = styled.h2`
   position: absolute;

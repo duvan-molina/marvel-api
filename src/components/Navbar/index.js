@@ -3,6 +3,7 @@ import logo from '../../images/logo.svg'
 import styled from 'styled-components'
 import TextField from '../Field'
 import Button from '../Button'
+import { Link } from 'react-router-dom'
 
 
 const Navbar = () => {
@@ -16,11 +17,13 @@ const Navbar = () => {
     <NavbarStyled>
       <NavbarContainer>
         <NavbarContent>
-          <NavbarLogo>
-            <figure>
-              <img src={logo} alt=' Logo de marvel' />
-            </figure>
-          </NavbarLogo>
+          <Link to='/'>
+            <NavbarLogo>
+              <figure>
+                <img src={logo} alt=' Logo de marvel' />
+              </figure>
+            </NavbarLogo>
+          </Link>
           <NavbarContainerItems>
             <Divider />
             <NavbarActions>

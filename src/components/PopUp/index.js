@@ -1,21 +1,47 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import styled from 'styled-components'
+import { useOpen } from '../../context/useIsOpen'
+import { Link } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
-const PopUp = ({ isOpen }) => {
+const PopUp = () => {
+  const { id } = useParams()
+  const [character, setCharacter] = React.useState([])
+
+  React.useEffect(() => {
+    fetch(`https://gateway.marvel.com:443/v1/public/characters/${id}?ts=1&apikey=31260be2bc7380f8b5a7b72012706a93&hash=5aaa7887ae87c22f886dfc36de35825d`)
+      .then(response => response.json())
+      .then(character => setCharacter(character.data.results))
+  }, [id])
+
+  const { isOpen } = useOpen()
   if (!isOpen) {
     return null;
   }
-
   return ReactDOM.createPortal(
     <PopUpStyled>
       <PopUpContent>
-        <PopUpHeader>
-          <PopUpName>spider-man</PopUpName>
-          <ButtonClose>x</ButtonClose>
-        </PopUpHeader>
+        {character.length ? character.map((e) => (
+          <div key={e.id}>
+            <PopUpHeader>
+              <PopUpName>{e.name}</PopUpName>
+              <Link to='/'>
+                <ButtonClose>x</ButtonClose>
+              </Link>
+            </PopUpHeader>
+            <PopUpBody>
+              <PopUpImage>
+                <img src={`${e.thumbnail.path}.${e.thumbnail.extension}`} alt={e.name} style={{ width: '100%' }} />
+              </PopUpImage>
+              <div>
+                <p>{e.description.length ? e.description : 'No hay descripción'}</p>
+              </div>
+            </PopUpBody>
+          </div>
+        )) : 'Cargando...'}
       </PopUpContent>
-    </PopUpStyled>,
+    </PopUpStyled >,
     document.getElementById('popUp')
   )
 }
@@ -38,6 +64,7 @@ const PopUpContent = styled.div`
   height: 438px;
   border-radius: 5px;
   padding: 20px 15px 0;
+  overflow-y: auto;
 `
 const PopUpHeader = styled.div`
   position: relative;
@@ -60,6 +87,24 @@ const ButtonClose = styled.button`
   font-size: 20px;
   cursor: pointer;
   color: ${({ theme }) => theme.palette.colorFont};
+`
+
+const PopUpBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+`
+
+const PopUpImage = styled.div`
+  height: 210px;
+  width: 210px;
+  margin: 10px auto;
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+  }
 `
 
 export default PopUp
