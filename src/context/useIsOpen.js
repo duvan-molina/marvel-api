@@ -3,7 +3,7 @@ import React from 'react'
 const OpenContext = React.createContext()
 
 export function OpenProvider(props) {
-  const [isOpen, setIsOpen] = React.useState(true)
+  const [isOpen, setIsOpen] = React.useState(false)
 
   const value = React.useMemo(() => {
     return ({

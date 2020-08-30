@@ -6,7 +6,6 @@ import { DataPropvider } from '../context/getData'
 import { OpenProvider } from '../context/useIsOpen'
 import Layout from '../components/Layout'
 import Home from '../pages/Home'
-import PopUp from '../components/PopUp'
 
 const App = () => {
   return (
@@ -19,9 +18,6 @@ const App = () => {
               <Switch location={{ pathname: '/' }}>
                 <Route exact path='/' component={Home} />
               </Switch>
-              <Route exact path='/character/:id' render={props => (
-                <PopUp {...props} />
-              )} />
             </Layout>
           </BrowserRouter>
         </OpenProvider>
