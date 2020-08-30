@@ -1,11 +1,14 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
 import styled from 'styled-components'
 import { useOpen } from '../../context/useIsOpen'
 import { cropText } from '../../utils'
 
-const PopUp = ({ selectId, setSelectId, name, image, description }) => {
+const PopUp = ({ selectId, name, image, description, handleOnClick }) => {
+  const { isOpen } = useOpen()
   const [character, setCharacter] = React.useState([])
+
   const url = `https://gateway.marvel.com/v1/public/characters/${selectId}/comics?ts=1&apikey=31260be2bc7380f8b5a7b72012706a93&hash=5aaa7887ae87c22f886dfc36de35825d`
 
   React.useEffect(() => {
@@ -14,27 +17,32 @@ const PopUp = ({ selectId, setSelectId, name, image, description }) => {
       .then(character => setCharacter(character.data.results))
   }, [selectId, url])
 
-  /*   const newArray = character.map((e) => e).sort((a, b) => {
-      const dateA = new Date(e.)
-    })
-  
-    console.log(newArray) */
-
-  const handleClick = () => {
-    setIsOpen(!isOpen)
-    setSelectId()
+  function useOutside(ref) {
+    React.useEffect(() => {
+      function handleClickOutside(event) {
+        if (ref.current && !ref.current.contains(event.target)) {
+          handleOnClick()
+        }
+      }
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }, [ref]);
   }
-  const { isOpen, setIsOpen } = useOpen()
+  const wrapperRef = React.useRef(null);
+  useOutside(wrapperRef);
+
   if (!isOpen) {
     return null;
   }
 
   return ReactDOM.createPortal(
     <PopUpStyled>
-      <PopUpContent>
+      <PopUpContent ref={wrapperRef}>
         <PopUpHeader>
           <PopUpName>{name}</PopUpName>
-          <ButtonClose onClick={handleClick}>x</ButtonClose>
+          <ButtonClose onClick={handleOnClick}>x</ButtonClose>
         </PopUpHeader>
         <PopUpBody>
           <PopUpImage>
@@ -74,7 +82,7 @@ const PopUp = ({ selectId, setSelectId, name, image, description }) => {
 
 const PopUpStyled = styled.div`
   position: fixed;
-  top: 66px;
+  top: 0;
   bottom: 0;
   left: 0;
   right: 0;
@@ -82,6 +90,7 @@ const PopUpStyled = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1;
 `
 
 const PopUpContent = styled.div`
@@ -163,5 +172,13 @@ const PopUpComicTitle = styled.h3`
   font-weight: bold;
   margin-bottom: 5px;
 `
+
+PopUp.propTypes = {
+  selectId: PropTypes.any.isRequired,
+  name: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  handleOnClick: PropTypes.func.isRequired
+}
 
 export default PopUp

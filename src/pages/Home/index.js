@@ -10,10 +10,13 @@ const HomePage = () => {
   const { isOpen, setIsOpen } = useOpen();
   const [selectId, setSelectId] = React.useState()
 
-  const handleClick = id => {
+  const handleOnClickOpenModal = id => {
     setSelectId(id)
     setIsOpen(!isOpen)
   }
+
+  const handleOnClick = () => setIsOpen(!isOpen)
+
 
   return (
     <HomeContainer>
@@ -22,12 +25,13 @@ const HomePage = () => {
         return (
           <div key={e.id}>
             <Card
-              onClick={() => handleClick(e.id)}
+              onClick={() => handleOnClickOpenModal(e.id)}
               name={e.name}
               image={image}
             />
             {selectId === e.id &&
               <PopUp
+                handleOnClick={handleOnClick}
                 name={e.name}
                 image={image}
                 description={e.description}

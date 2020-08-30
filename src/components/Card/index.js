@@ -1,10 +1,14 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Button from '../Button'
 
 const Card = ({ name, image, ...props }) => {
   const [state, setState] = React.useState(false)
-  const handleClick = () => setState(!state)
+  const handleClick = e => {
+    setState(!state)
+    e.stopPropagation()
+  }
 
   return (
     <CardStyled image={image} {...props}>
@@ -25,9 +29,9 @@ const CardStyled = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
   svg {
-  position: absolute;
-  top: 10px;
-  right: 23px;
+    position: absolute;
+    top: 10px;
+    right: 23px;
   }
 `
 const NameHero = styled.h2`
@@ -38,5 +42,10 @@ const NameHero = styled.h2`
   letter-spacing: -0.25px;
   font-weight: bold;
 `
+
+Card.propTypes = {
+  name: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired
+}
 
 export default Card

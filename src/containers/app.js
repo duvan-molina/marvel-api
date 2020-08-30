@@ -13,7 +13,7 @@ const App = () => {
       <DataPropvider>
         <OpenProvider>
           <BrowserRouter>
-            <GlobalStyle scroll={false} />
+            <GlobalStyle />
             <Layout>
               <Switch location={{ pathname: '/' }}>
                 <Route exact path='/' component={Home} />
@@ -35,7 +35,6 @@ const GlobalStyle = createGlobalStyle`
   }
   body {
     background-color: rgba(168, 168, 168, .10);
-    overflow-y: ${ ({ scroll }) => scroll && 'hidden'};
     color: ${({ theme }) => theme.palette.colorFont};
   }
 `
